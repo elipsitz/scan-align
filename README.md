@@ -22,3 +22,8 @@ This tool also needs `pdftoppm`, which is a component of [Poppler](https://en.wi
 
 `python3 add_marker.py <path to input PDF> <path to save output PDF>`
 
+
+## Example
+
+For an example, see the `example/` folder.
+
