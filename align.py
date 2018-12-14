@@ -128,15 +128,19 @@ if __name__ == "__main__":
         img = cv.imread(input_filename, 0)
 
         points = find_markers(imthreshold(img))
-        points = align_points(points)
-        M = cv.getAffineTransform(np.float32(points), np.float32(template_points))
-        dst = cv.warpAffine(
-            img,
-            M,
-            template_img.shape[::-1],
-            borderMode=cv.BORDER_CONSTANT,
-            borderValue=(255, 255, 255),
-        )
+        if len(points) == 3:
+            points = align_points(points)
+            M = cv.getAffineTransform(np.float32(points), np.float32(template_points))
+            dst = cv.warpAffine(
+                img,
+                M,
+                template_img.shape[::-1],
+                borderMode=cv.BORDER_CONSTANT,
+                borderValue=(255, 255, 255),
+            )
+        else:
+            print("WARNING: Page has only {} markers!".format(len(points)))
+            dst = img
 
         output_filename = outdir + os.path.basename(input_filename) + ".jpg"
         outfiles.append(output_filename)
